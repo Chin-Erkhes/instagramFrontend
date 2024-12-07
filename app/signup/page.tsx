@@ -1,6 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+// import { Post } from "@/app/post/page";
 import {
   Card,
   CardHeader,
@@ -31,13 +32,26 @@ export default function Page() {
   //   }
   // };
 
-  const eMail = () => {};
+  const l = () => {
+    const eMail = () => {
+      if (!email.includes("@")) {
+        return alert("heddugeer zuund amidrad bgan be @ ashiglach");
+      }
+    };
+    eMail();
+    const userPassword = () => {
+      if (password.length < 8) {
+        alert("8aas ih oron hii");
+      }
+    };
+    userPassword();
+  };
 
   return (
     <div className="flex justify-center items-center bg-black h-screen">
       <Card className="flex flex-col w-[350px] bg-black border-none">
         <CardHeader>
-          <CardTitle className="text-5xl font text-white font-black justify-center mb-10">
+          <CardTitle className="text-5xl font text-white font-black">
             Instagram
           </CardTitle>
           <CardDescription className="text-xl font text-white font-bold">
@@ -77,7 +91,10 @@ export default function Page() {
           />
         </CardContent>
         <CardFooter className="w-screen">
-          <Button className="flex justify-center font-bold	bg-blue-700 w-[300px]">
+          <Button
+            className="flex justify-center font-bold	bg-blue-700 w-[300px]"
+            onClick={l}
+          >
             Signup
           </Button>
         </CardFooter>
@@ -86,6 +103,7 @@ export default function Page() {
           <div className="text-blue-700 font-bold">Log in</div>
         </div>
       </Card>
+      {/* <Post></Post> */}
     </div>
   );
 }
