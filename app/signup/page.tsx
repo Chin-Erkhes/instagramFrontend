@@ -11,7 +11,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 export default function Page() {
   const [email, setEmail] = useState<string>("");
@@ -19,10 +19,6 @@ export default function Page() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleEmailValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
 
   // const signUp = () => {
   //   if (email === "") {
