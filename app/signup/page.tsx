@@ -1,6 +1,8 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
 // import { Post } from "@/app/post/page";
 import {
   Card,
@@ -12,8 +14,10 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [username, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -29,18 +33,17 @@ export default function Page() {
   // };
 
   const l = () => {
-    const eMail = () => {
-      if (!email.includes("@")) {
-        return alert("heddugeer zuund amidrad bgan be @ ashiglach");
-      }
-    };
-    eMail();
-    const userPassword = () => {
-      if (password.length < 8) {
-        alert("8aas ih oron hii");
-      }
-    };
-    userPassword();
+    if (email.includes("@")) {
+    } else {
+      return alert("heddugeer zuund amidrad bgan be @ ashiglach");
+    }
+
+    if (password.length < 8) {
+      return alert("8aas ih oron hii");
+    }
+
+    router.push("/login");
+    return alert("Successfully signed up");
   };
 
   return (
@@ -48,7 +51,7 @@ export default function Page() {
       <Card className="flex flex-col w-[350px] bg-black border-none">
         <CardHeader>
           <CardTitle className="text-5xl font text-white font-black">
-            Instagram
+            𝐼𝓃𝓈𝓉𝒶𝑔𝓇𝒶𝓂
           </CardTitle>
           <CardDescription className="text-xl font text-white font-bold">
             Signup to see photos and videos from your friends.
@@ -89,14 +92,21 @@ export default function Page() {
         <CardFooter className="w-screen">
           <Button
             className="flex justify-center font-bold	bg-blue-700 w-[300px]"
-            onClick={l}
+            onClick={() => {
+              l();
+            }}
           >
             Signup
           </Button>
         </CardFooter>
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-3">
           <div className="text-white">Have an account?</div>
-          <div className="text-blue-700 font-bold">Log in</div>
+          <button
+            onClick={() => router.push("/login")}
+            className="text-blue-700 font-bold"
+          >
+            Log in
+          </button>
         </div>
       </Card>
       {/* <Post></Post> */}
