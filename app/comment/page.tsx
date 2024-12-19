@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 type User = {
   _id: string;
@@ -20,6 +21,16 @@ type Comment = {
 };
 
 const Page = () => {
+  const pathname = usePathname();
+  console.log(pathname);
   const [comments, setComments] = useState<Comment[]>([]);
+
+  return (
+    <div>
+      {comments.map((comment, i) => {
+        return <div key={i}>{comment.comment}</div>;
+      })}
+    </div>
+  );
 };
 export default Page;

@@ -87,11 +87,10 @@ const Page = () => {
                 </div>
               </div>
 
-              {/* <div>{post.caption}</div> */}
               <div className="text-white ml-3">0 likes</div>
               <div className="text-white ml-3">{post.userId?._id}</div>
               <div
-                onClick={() => router.push("/comment")}
+                onClick={() => router.push("/comment/" + post._id)}
                 className="text-gray-500 ml-3 pb-5 cursor-pointer"
               >
                 view all comments
