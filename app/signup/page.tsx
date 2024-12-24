@@ -20,19 +20,9 @@ export default function Page() {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [username, setUserName] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
 
-  // const signUp = () => {
-  //   if (email === "") {
-  //     setEmailError(true);
-  //   } else {
-  //     setEmailError(false);
-  //   }
-  // };
-
-  const l = () => {
+  const postNewUser = async () => {
     if (email.includes("@")) {
     } else {
       return alert("heddugeer zuund amidrad bgan be @ ashiglach");
@@ -41,8 +31,27 @@ export default function Page() {
     if (password.length < 8) {
       return alert("8aas ih oron hii");
     }
+    const newBro = {
+      username,
+      password,
+      email,
+    };
 
-    router.push("/login");
+    const jsonData = await fetch(
+      `https://instagram-1-1kxe.onrender.com/signup`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newBro),
+      }
+    );
+    const response = await jsonData.json();
+    console.log(response);
+    localStorage.setItem("token", response.token);
+
+    router.push("/post");
     return alert("Successfully signed up");
   };
 
@@ -58,18 +67,6 @@ export default function Page() {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-y-3 ">
-          <Input
-            placeholder="firstName"
-            className="border-y-slate-700 border-x-slate-700 font-bold	bg-[#121212] text-white"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-          <Input
-            placeholder="lastName"
-            className="border-y-slate-700 border-x-slate-700 font-bold bg-[#121212] text-white"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
           <Input
             placeholder="username"
             className="border-y-slate-700 border-x-slate-700 font-bold bg-[#121212] text-white"
@@ -93,7 +90,7 @@ export default function Page() {
           <Button
             className="flex justify-center font-bold	bg-blue-700 w-[300px]"
             onClick={() => {
-              l();
+              postNewUser();
             }}
           >
             Signup

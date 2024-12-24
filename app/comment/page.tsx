@@ -27,7 +27,7 @@ const Page = () => {
 
   return (
     <div>
-      {comments.map((comment, i) => {
+      {comments?.map((comment, i) => {
         return <div key={i}>{comment.comment}</div>;
       })}
     </div>

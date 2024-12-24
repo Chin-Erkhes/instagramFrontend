@@ -33,34 +33,32 @@ const Page = () => {
     );
 
     const data = await response.json();
-
     setComments(data);
   };
-  console.log(comments);
+
   useEffect(() => {
     getCommentsByUserId();
   }, []);
-
   return (
-    <div className="bg-black h-screen">
-      {comments.map((comment, i) => {
+    <div className="h-screen">
+      {comments?.map((comment, i) => {
         return (
-          <div>
-            <div className="flex text-white gap-3 p-8" key={i}>
+          <div className="text-black">
+            <div className="flex text-black gap-3 p-8" key={i}>
               <Avatar>
-                <AvatarImage className="" src={comment.userId.profileImage} />
+                <AvatarImage className="" src={comment.userId?.profileImage} />
               </Avatar>
               <div className="ml-4">
                 <div className="flex items-center font-bold">
-                  {comment.userId.username}
+                  {comment.userId?.username}
                 </div>
-                <div className="text-white ">{comment.comment}</div>
+                <div className="text-black ">{comment.comment}</div>
                 <div className="flex gap-3">
                   <div className="text-xs text-gray-500 font-bold">20h</div>
                   <div className="text-xs text-gray-500 font-bold">1 like</div>
                 </div>
               </div>
-              <Heart className="text-white cursor-pointer ml-10 mt-3" />
+              <Heart className="text-black cursor-pointer mt-3" />
             </div>
           </div>
         );
