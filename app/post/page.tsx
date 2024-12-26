@@ -30,6 +30,13 @@ type User = {
   followers: string[];
 };
 
+type Comment = {
+  _id: string;
+  userId: User;
+  comment: string;
+  createAt: string;
+};
+
 type Post = {
   _id: string;
   caption: string;
@@ -40,6 +47,7 @@ type Post = {
 const Page = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const router = useRouter();
+  const [comment, setComment] = useState<Comment[]>([]);
 
   const getPosts = async () => {
     const token = localStorage.getItem("accessToken");

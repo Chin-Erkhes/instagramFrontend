@@ -40,11 +40,11 @@ const Page = () => {
     getCommentsByUserId();
   }, []);
   return (
-    <div className="h-screen">
+    <div className="h-screen bg-black">
       {comments?.map((comment, i) => {
         return (
-          <div className="text-black">
-            <div className="flex text-black gap-3 p-8" key={i}>
+          <div className="text-white">
+            <div className="flex text-white gap-3 p-8" key={i}>
               <Avatar>
                 <AvatarImage className="" src={comment.userId?.profileImage} />
               </Avatar>
@@ -52,13 +52,13 @@ const Page = () => {
                 <div className="flex items-center font-bold">
                   {comment.userId?.username}
                 </div>
-                <div className="text-black ">{comment.comment}</div>
+                <div className="text-white ">{comment.comment}</div>
                 <div className="flex gap-3">
                   <div className="text-xs text-gray-500 font-bold">20h</div>
                   <div className="text-xs text-gray-500 font-bold">1 like</div>
                 </div>
               </div>
-              <Heart className="text-black cursor-pointer mt-3" />
+              <Heart className="text-white cursor-pointer mt-3" />
             </div>
           </div>
         );

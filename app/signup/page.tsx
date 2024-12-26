@@ -37,16 +37,13 @@ export default function Page() {
       email,
     };
 
-    const jsonData = await fetch(
-      `https://instagram-1-1kxe.onrender.com/signup`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newBro),
-      }
-    );
+    const jsonData = await fetch(`https://instagram-dfjf.onrender.com/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newBro),
+    });
     const response = await jsonData.json();
     console.log(response);
     localStorage.setItem("token", response.token);

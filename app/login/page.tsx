@@ -20,7 +20,7 @@ const Page = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState<string>("");
 
-  const goToPost = () => {
+  const goToPost = async () => {
     if (email.includes("@")) {
     } else {
       return alert("heddugeer zuund amidrad bgan be @ ashiglach");
@@ -29,7 +29,20 @@ const Page = () => {
     if (password.length < 8) {
       return alert("8aas ih oron hii");
     }
+
+    const jsonData = await fetch(`https://instagram-dfjf.onrender.com/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const response = await jsonData.json();
+    console.log(response);
+    localStorage.setItem("token", response.token);
+
     router.push("/post");
+    return alert("Successfully logged in");
   };
   return (
     <div className="flex justify-center items-center bg-black h-screen ">
