@@ -1,23 +1,10 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-import { Heart } from "lucide-react";
-import { MessageCircle } from "lucide-react";
-import { Send } from "lucide-react";
-import { Bookmark } from "lucide-react";
-import { Ellipsis } from "lucide-react";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { PostHeader } from "@/custom_component/PostHeader";
+import { PostAction } from "@/custom_component/PostActions";
+import { PostContent } from "@/custom_component/PostContent";
 
 type User = {
   _id: string;
@@ -30,30 +17,33 @@ type User = {
   followers: string[];
 };
 
-type Comment = {
-  _id: string;
-  userId: User;
-  comment: string;
-  createAt: string;
-};
-
 type Post = {
   _id: string;
   caption: string;
   postImage: string;
   userId: User;
+  likes: string[];
 };
 
 const Page = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const [comment, setComment] = useState<Comment[]>([]);
 
   const getPosts = async () => {
-    const token = localStorage.getItem("accessToken");
-    const jsonData = await fetch("https://instagram-dfjf.onrender.com/posts");
-    const response = await jsonData.json();
-    setPosts(response);
+    setLoading(true);
+    try {
+      const response = await fetch("https://instagram-dfjf.onrender.com/posts");
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
+      const jsonData = await response.json();
+      setPosts(jsonData);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -61,52 +51,30 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="bg-black ">
-      <div className="text-white text-5xl p-3">𝐼𝓃𝓈𝓉𝒶𝑔𝓇𝒶𝓂</div>
-      {posts?.map((post, i) => {
-        return (
-          <div className="justify-center items-center">
-            <div className="text-black" key={i}>
-              <div className="flex gap-3 mb-4 justify-between">
-                <div className="flex gap-3 m-3">
-                  <Avatar>
-                    <AvatarImage src={post.userId?.profileImage} />
-                  </Avatar>
-                  <div className="text-white flex items-center font-bold">
-                    {post.userId?.username}
-                  </div>
-                </div>
-                <div className="items-center flex">
-                  <Ellipsis className="text-white m-3 cursor-pointer" />
-                </div>
-              </div>
-              <img className="min-h-80" src={post.postImage} />
-              <div className="flex justify-between">
-                <div className="flex gap-3 m-3">
-                  <Heart className="text-white cursor-pointer" />
-                  <MessageCircle
-                    onClick={() => router.push("/comment")}
-                    className="text-white cursor-pointer"
-                  />
-                  <Send className="text-white cursor-pointer" />
-                </div>
-                <div className="m-3">
-                  <Bookmark className="text-white cursor-pointer" />
-                </div>
-              </div>
-
-              <div className="text-white ml-3">0 likes</div>
-              <div className="text-white ml-3">{post.userId?._id}</div>
-              <div
-                onClick={() => router.push("/comment/" + post._id)}
-                className="text-gray-500 ml-3 pb-5 cursor-pointer"
-              >
-                view all comments
-              </div>
-            </div>
+    <div className="bg-black min-h-screen">
+      <div className="text-white text-5xl p-5 text-center font-bold">
+        𝐼𝓃𝓈𝓉𝒶𝑔𝓇𝒶𝓂
+      </div>
+      {loading && (
+        <div className="text-white text-center py-5">Loading posts...</div>
+      )}
+      <div className="flex flex-col items-center gap-10">
+        {posts?.map((post) => (
+          <div
+            key={post._id}
+            className="w-full max-w-md flex flex-col rounded-lg shadow-lg p-3"
+          >
+            <PostHeader
+              profileImage={post?.userId?.profileImage}
+              username={post?.userId?.username}
+              userId=""
+              // onClick={post?.userId?.username}
+            />
+            <PostContent postImage={post.postImage} caption={post.caption} />
+            <PostAction postId={post._id} likes={post?.likes} />
           </div>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 };

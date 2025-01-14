@@ -15,8 +15,8 @@ type User = {
 };
 
 type Comment = {
-  comment: String;
-  postId: String;
+  comment: string;
+  postId: string;
   userId: User;
 };
 
@@ -26,11 +26,18 @@ const Page = () => {
   const [comments, setComments] = useState<Comment[]>([]);
 
   return (
-    <div>
-      {comments?.map((comment, i) => {
-        return <div key={i}>{comment.comment}</div>;
-      })}
+    <div className="bg-black min-h-screen">
+      {comments.length > 0 ? (
+        comments.map((comment, i) => (
+          <div key={i} className="w-full max-w-md flex flex-col rounded-lg p-3">
+            {comment.comment}
+          </div>
+        ))
+      ) : (
+        <div className="text-gray-500 text-lg">No comments yet.</div>
+      )}
     </div>
   );
 };
+
 export default Page;
